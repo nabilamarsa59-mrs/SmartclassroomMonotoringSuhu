@@ -9,3 +9,8 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('Auth.Login');
 });
+Route::prefix('walikelas')->name('walikelas.')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('WaliKelas.Dashboard');
+    })->name('dashboard');
+});
