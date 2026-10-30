@@ -14,3 +14,6 @@ Route::prefix('walikelas')->name('walikelas.')->group(function () {
         return view('WaliKelas.Dashboard');
     })->name('dashboard');
 });
+    Route::get('/ruangan', function () {
+        return view('WaliKelas.Ruangan');
+    })->name('ruangan');
