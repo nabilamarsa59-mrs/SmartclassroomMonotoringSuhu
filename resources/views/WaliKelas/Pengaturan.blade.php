@@ -226,7 +226,7 @@
                 </button>
             </div>
 
-            <form id="PengaturaneForm" onsubmit="savePengaturane(event)" class="mt-4 space-y-4">
+            <form id="PengaturanForm" onsubmit="savePengaturan(event)" class="mt-4 space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">NIP</label>
                     <input type="text" id="inputNip" value="33451" class="w-full bg-sage-50/50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:ring-2 focus:ring-sage-600 focus:outline-none">
@@ -276,7 +276,7 @@
             document.getElementById(id).classList.add('hidden');
         }
 
-        function savePengaturane(event) {
+        function savePengaturan(event) {
             event.preventDefault();
             
             const nip = document.getElementById('inputNip').value;
