@@ -6,8 +6,10 @@ use App\Http\Controllers\GuruAuthController;
 use App\Http\Middleware\HanyaGuru;
 
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect()->route('portal');
 });
+
+Route::get('/portal', [PageController::class, 'portal'])->name('portal');
 
 Route::get('/login', function () {
     return view('Auth.Login');
@@ -19,11 +21,6 @@ Route::post('/login', [GuruAuthController::class, 'login'])
 
 Route::post('/logout', [GuruAuthController::class, 'logout'])->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| Wali Kelas (hanya guru yang sudah login)
-|--------------------------------------------------------------------------
-*/
 Route::prefix('walikelas')->name('walikelas.')->middleware(HanyaGuru::class)->group(function () {
     Route::get('/dashboard', function () {
         return view('WaliKelas.Dashboard');
@@ -42,8 +39,7 @@ Route::prefix('walikelas')->name('walikelas.')->middleware(HanyaGuru::class)->gr
     })->name('pengaturan');
 });
 
-// Halaman depan (pilih peran) + proses login Petugas TU: terbuka untuk umum
-Route::get('/portal', [PageController::class, 'portal'])->name('portal');
+// Proses login Petugas TU: terbuka untuk umum
 Route::post('/tu/login', [PageController::class, 'login'])
     ->middleware('throttle:5,1')
     ->name('tu.login.proses');

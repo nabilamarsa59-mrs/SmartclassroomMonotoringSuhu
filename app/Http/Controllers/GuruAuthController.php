@@ -43,13 +43,15 @@ class GuruAuthController extends Controller
         return redirect()->route('walikelas.dashboard');
     }
 
-    // Keluar dari sistem, kembali ke halaman login
+    // Keluar dari sistem, kembali ke halaman depan (portal)
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('status', 'Anda telah keluar dari sistem.');
+        return redirect()
+            ->route('portal')
+            ->with('info', 'Anda telah keluar dari sistem.');
     }
 }

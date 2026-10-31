@@ -5,12 +5,33 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Support\DummyData;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class PageController extends Controller
+class PageController extends Controller implements HasMiddleware
 {
+    /**
+     * Penjaga: semua halaman Petugas TU hanya bisa dibuka setelah login sebagai
+     * Petugas TU. Pengecualian: halaman depan (portal) dan proses login.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(function ($request, $next) {
+                $user = $request->user();
+
+                if (! $user || $user->role !== 'tu') {
+                    return redirect()->guest(route('portal', ['peran' => 'tu']));
+                }
+
+                return $next($request);
+            }, except: ['portal', 'login']),
+        ];
+    }
+
     private const EMAIL_OTOMATIS = '@guru.smartclassroom.local';
 
     private ?User $akunTU = null;
@@ -182,8 +203,15 @@ class PageController extends Controller
 
     public function portal()
     {
-        if (Auth::check() && Auth::user()->role === 'tu') {
+        // Yang sudah login langsung diarahkan ke halamannya masing-masing
+        $user = Auth::user();
+
+        if ($user && $user->role === 'tu') {
             return redirect()->route('tu.beranda');
+        }
+
+        if ($user && $user->role === 'guru') {
+            return redirect()->route('walikelas.dashboard');
         }
 
         return view('PetugasTU.portal');

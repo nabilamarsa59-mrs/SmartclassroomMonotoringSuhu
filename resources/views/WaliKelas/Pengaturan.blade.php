@@ -37,6 +37,11 @@
 </head>
 <body class="bg-[#f8faf8] text-slate-800 antialiased min-h-screen flex">
 
+    <!-- FORM LOGOUT (dipanggil oleh tombol Keluar) -->
+    <form id="form-logout" method="POST" action="{{ route('logout') }}" hidden>
+        @csrf
+    </form>
+
     <!-- SIDEBAR -->
     <aside class="w-64 bg-white border-r border-sage-100 flex flex-col justify-between hidden md:flex shrink-0 min-h-screen">
         <div>
@@ -304,9 +309,10 @@
             }, 3000);
         }
 
+        // Keluar sungguhan: kirim POST ke route "logout", lalu kembali ke portal
         function confirmLogout() {
             if (confirm('Apakah Anda yakin ingin keluar dari akun SmartClassroom?')) {
-                showToast('Logout berhasil...');
+                document.getElementById('form-logout').submit();
             }
         }
     </script>

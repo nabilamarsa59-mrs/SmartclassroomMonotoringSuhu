@@ -77,14 +77,6 @@
                 </a>
             </nav>
         </div>
-
-        <!-- Logout Button -->
-        <div class="p-4 border-t border-sage-100">
-            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
-                <span>Keluar</span>
-            </a>
-        </div>
     </aside>
 
     <!-- MAIN CONTENT AREA -->
